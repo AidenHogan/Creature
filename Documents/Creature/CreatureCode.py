@@ -2,8 +2,12 @@ import time
 
 import RPi.GPIO as GPIO
 
-#Set up GPIO using BCM numbering
-GPIO.setmode(GPIO.BCM)
+#Set up GPIO using BCM numbering, I don't trust it to work....
+try:
+    GPIO.setmode(GPIO.BCM)
+except RuntimeError:
+    print("Failed to configure GPIO. Are you running as root?")
+    exit(1)
 GPIO.setwarnings(False)
 
 #Set desired GPIO pins as outputs
@@ -28,7 +32,7 @@ allOff()
 
 try:
     while True:
-        key = input("Enter W/A/S/D (or L to leave): ").lower()
+        key = input("Enter W/A/S/D or L to leave ").lower()
 
         if key == 'w':
             print("Forward")
